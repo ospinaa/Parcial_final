@@ -1,10 +1,14 @@
 import Link from "next/link";
+import { notFound } from "next/navigation"
+import { apiFetch } from "../../../lib/loan-types"
+import type { LoanRequest } from "../../../lib/loan-types";
 
 type ReceiptPageProps = { params: Promise<{ id: string }> };
 
 export default async function ReceiptPage({ params }: ReceiptPageProps) {
-  // TODO FRONT-C: leer params y consultar el detalle con apiFetch.
-  // TODO FRONT-C: mostrar ID, purpose, days y tool.name de la solicitud recibida.
+  const { id }= await params;
+  conts requestId =Number(id);
+  if (!Number.isSafeInteger(requestId) || requestId < 1 || String)
   void params;
 
   return (

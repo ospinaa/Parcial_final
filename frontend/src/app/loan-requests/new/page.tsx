@@ -6,14 +6,25 @@ import type { Tool } from "../../../lib/loan-types";
 async function createLoanRequest(formData: FormData) {
   "use server";
 
-  const purpose = String
+  const purpose = String(formData.get("purpose") ??""). trim ();
+  const days = Number (formData.get("days"));
+  const toolId = Number ( formData.get("toolId"));
   void formData;
 }
 
 export default async function NewLoanRequestPage() {
-  const response = await apiFetch("/tools");
-  const tools: Tool[] = response.ok ? await response.json() : [];
+  const response = await apiFetch("/loan-request", {
+    method: "POST", 
+    headers: {"Content-Type": "applicaltion/json"},
+  });
+  
+  if( response.status !== 201) return ;
+  const created = await response.json().catch(() => null);
+  const id = created?.id;
+  if (typeof id !== "number" || !Number.isSafeInteger(id) || id < 1)return;
 
+  redirect(`/loan-request/${id}`);
+  
   return (
     <main>
       <h1>New loan request</h1>
